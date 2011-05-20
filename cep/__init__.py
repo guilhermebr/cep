@@ -67,11 +67,20 @@ class Correios():
         html = handle.read()
         return self._parse_detalhe(html)
         
-    def consulta(self, endereco, primeiro=False, 
-                 uf=None, localidade=None, tipo=None, numero=None):
+    def consulta(self, endereco=False, primeiro=False, 
+                 uf=None, localidade=None, tipo=None, numero=None, cep=None):
         """Consulta site e retorna lista de resultados"""
         
-        if uf is None:
+        if cep:
+           url = 'consultaLogradouroAction.do'
+           data = {
+                'CEP': cep,
+                'Metodo': 'listaLogradouro',
+                'TipoConsulta': 'cep',
+                'StartRow': '1',
+                'EndRow': '10'
+           }
+        elif uf is None:
             url = 'consultaEnderecoAction.do'
             data = {
                 'relaxation': endereco.encode('ISO-8859-1'),
