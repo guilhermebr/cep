@@ -31,14 +31,20 @@ class Correios():
 
         return handle
 
+    def _split_logradouro(self, logradouro):
+        """"Separa nome do logradouro e complemento, retorna tupla dos valores"""
+        logradouro, sep, complemento = logradouro.partition(' - ')
+        return (logradouro, complemento)
+
     def _parse_detalhe(self, html):
         soup = BeautifulSoup(html.decode('ISO-8859-1'))
-
         value_cells = soup.findAll('td', attrs={'class': 'value'})
         values = [cell.firstText(text=True) for cell in value_cells]
+        logradouro, complemento = self._split_logradouro(values[0])
         localidade, uf = values[2].split('/')
         values_dict = {
-            'Logradouro': values[0],
+            'Logradouro': logradouro,
+            'Complemento': complemento,
             'Bairro': values[1],
             'Localidade': localidade,
             'UF': uf,
@@ -49,7 +55,11 @@ class Correios():
     def _parse_linha_tabela(self, tr):
         values = [cell.firstText(text=True) for cell in tr.findAll('td')]        
         keys = ['Logradouro', 'Bairro', 'Localidade', 'UF', 'CEP']
-        return dict(zip(keys, values))
+        values_dict = dict(zip(keys, values))
+        logradouro, complemento = self._split_logradouro(values[0])
+        values_dict['Logradouro'] = logradouro
+        values_dict['Complemento'] = complemento
+        return values_dict
         
     def _parse_tabela(self, html):
         soup = BeautifulSoup(html)
