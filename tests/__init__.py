@@ -16,7 +16,8 @@ class TestIntegration(unittest.TestCase):
         self.assertEquals(r['Localidade'], 'Porto Alegre')
         self.assertEquals(r['Bairro'], 'Vila Ipiranga')
         self.assertEquals(r['UF'], 'RS')
-        self.assertEquals(r['Logradouro'], u'Rua Alberto Silva - até 965/966')
+        self.assertEquals(r['Logradouro'], u'Rua Alberto Silva')
+        self.assertEquals(r['Complemento'], u'até 965/966')
 
     def test_tabela_resultados_conhecida(self):
         r = self.c.consulta(u'Rua Alberto Silva - até 965/966')
@@ -55,8 +56,8 @@ class TestParse(unittest.TestCase):
         self.assertEquals(r['Localidade'], 'Rio de Janeiro')
         self.assertEquals(r['Bairro'], 'Barra da Tijuca')
         self.assertEquals(r['UF'], 'RJ')
-        self.assertEquals(r['Logradouro'], u'Avenida das Américas - '
-                                           u'de 3979 a 5151 - lado ímpar')
+        self.assertEquals(r['Logradouro'], u'Avenida das Américas')
+        self.assertEquals(r['Complemento'], u'de 3979 a 5151 - lado ímpar')
 
     def test_parse_nao_existente(self):
         html = self.pega_conteudo_arquivo('exemplo_lista_nao_encontrado.html')
@@ -68,6 +69,7 @@ class TestParse(unittest.TestCase):
         r = self.c._parse_tabela(html)
         self.assertEquals(len(r), 80)
         self.assertEquals(r[0]['Logradouro'], 'Rua Alberto Silva')
+        self.assertEquals(r[0]['Complemento'], '')
         self.assertEquals(r[0]['Bairro'], 'Itaigara')
         self.assertEquals(r[0]['Localidade'], 'Salvador')
         self.assertEquals(r[0]['UF'], 'BA')
