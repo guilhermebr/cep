@@ -85,7 +85,7 @@ class TestParse(unittest.TestCase):
         r = self.c._parse_faixa(html)
         self.assertEquals(r, None)
 
-    def test_parse_faixa_inexistente(self):
+    def test_parse_faixa_cep_unico(self):
         html = self.pega_conteudo_arquivo('exemplo_faixa_cep_unico.html')
         r = self.c._parse_faixa(html)
         self.assertEquals(r, '97420-000')
