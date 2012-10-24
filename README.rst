@@ -4,6 +4,13 @@
 
 Esta biblioteca acessa o site dos Correios para fazer pesquisa por CEP.
 
+INSTALAÇÃO
+==========
+
+::
+
+    pip install cep
+
 USO
 ===
 
@@ -27,9 +34,13 @@ REQUIREMENTS
 
 * BeautifulSoup
 
+LICENSE
+=======
+
+* MIT License
+
 TODO
 ====
 
 * Documentação
-* Criar setup.py e registrar no PyPi
 * Hospedar API pública (json/xml)
